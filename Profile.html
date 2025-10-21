@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김민혁 - 게임 개발자 포트폴리오</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 1. 기본 설정 --- */
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1e1e1e;
+            --primary-color: #00aaff;
+            --text-color: #f0f0f0; 
+            --text-secondary: #aaaaaa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* --- 2. 네비게이션 바 (메뉴) --- */
+        nav {
+            background-color: var(--surface-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        nav .logo span {
+            color: var(--primary-color);
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+        }
+
+        /* --- 시계 스타일 --- */
+        nav #clock {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-color); 
+            padding: 0.5rem;
+            min-width: 120px; 
+            text-align: right;
+        }
+        
+        /* --- 공용 섹션 스타일 --- */
+        section {
+            width: 90%;
+            max-width: 1100px;
+            margin: 4rem auto;
+            padding: 2rem;
+            border-radius: 10px;
+            background-color: var(--surface-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- 3. Hero (메인) 섹션 --- */
+        .hero-section {
+            background-color: var(--bg-color);
+            box-shadow: none;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            animation-delay: 0.2s;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+        }
+
+        .hero-section .highlight {
+            color: var(--primary-color);
+        }
+
+        /* --- [수정] 헤드라인 문구 (제안) --- */
+        .hero-section p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-button {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .hero-button:hover {
+            transform: scale(1.05);
+            background-color: #fff;
+        }
+
+        /* --- 4. About (자기소개) & Skills (보유 기술) --- */
+        .about-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .about-text, .skills-list {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--text-color); /* 보조 텍스트보다 잘 보이게 수정 */
+            line-height: 1.8;
+        }
+        
+        .skills-list h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .skill-tag {
+            background-color: #333;
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+
+        /* --- 5. Projects (프로젝트) --- */
+        .project-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            animation-delay: 0.4s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 170, 255, 0.2);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .project-content p {
+            color: var(--text-secondary);
+            flex-grow: 1;
+            margin-bottom: 1rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+        
+        .project-links a {
+            flex: 1;
+            text-align: center;
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            text-decoration: none;
+            padding: 0.75rem 0;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .project-links a.github {
+            background-color: #444;
+            color: var(--text-color);
+        }
+        
+        .project-links a:hover {
+            background-color: #fff;
+            color: var(--bg-color);
+        }
+
+        /* --- 6. Footer (하단) --- */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            background-color: var(--surface-color);
+            border-top: 1px solid #333;
+            margin-top: 4rem;
+        }
+
+        .footer-links {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* --- 7. 반응형 웹 (모바일) --- */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav .nav-links {
+                justify-content: center;
+                width: 100%;
+                flex-grow: 0; 
+                order: 2;
+            }
+
+            nav #clock {
+                order: 1;
+                text-align: center;
+                width: 100%;
+                padding: 0;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-section p {
+                font-size: 1rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="#" class="logo"><span>Home</span></a>
+        
+        <div class="nav-links">
+            <a href="#about">ABOUT</a>
+            <a href="#projects">PROJECTS</a>
+            <a href="#contact">CONTACT</a>
+        </div>
+        
+        <div id="clock"></div>
+    </nav>
+
+    <header id="home" class="hero-section fade-in">
+        <h1>안녕하세요 저는 <span class="highlight">김민혁</span>입니다.</h1>
+        <p>저는 기술을 통해 사람들에게 재미를 주고 싶은 게임 개발자입니다.</p>
+        <a href="#projects" class="hero-button">내 프로젝트 보기</a>
+    </header>
+
+    <main>
+
+        <section id="about" class="fade-in">
+            <h2>ABOUT ME</h2>
+            <div class="about-container">
+            
+                <div class="about-text">
+                    <p>
+                        저에게 코딩은 '생명을 불어넣는' 일입니다.
+                        <br><br>
+                        아티스트의 멋진 3D 캐릭터가 제 코드를 만나 비로소 살아 움직이고, 기획자의 아이디어가 플레이어의 '재미'로 구현되는 순간에 가장 큰 보람을 느낍니다.
+                        <br><br>
+                        팀원의 노력이 빛날 수 있도록 기술로 서포트하고, '함께' 만든 게임을 누군가 즐겁게 플레이하는 모습을 보는 것이 제가 개발을 사랑하는 이유입니다.
+                    </p>
+                </div>
+                <div class="skills-list">
+                    <h3>Engines</h3>
+                    <div class="skills-container">
+                        <span class="skill-tag">Unreal Engine</span>
+                        <span class="skill-tag">Unity</span>
+                    </div>
+
+                    <h3>Languages</h3>
+                    <div class="skills-container">
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">C#</span>
+                        <span class="skill-tag">Blueprint</span>
+                    </div>
+
+                    <h3>Tools</h3>
+                    <div class="skills-container">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">GitHub</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="projects" class="fade-in">
+            <h2>PROJECTS</h2>
+            
+            <div class="project-container">
+                                <article class="project-card">
+                    <img src="C:\Users\NSU\HTML\HorrorTitle.png?text=Horror+Game" alt="프로젝트 1 이미지">
+                    <div class="project-content">
+                        <h3>[The Things Left Behind]</h3>
+                        <p>
+                            언리얼 5로 개발한 VR 공포 게임입니다. 
+                            폐병원에서 정체불명의 존재를 피해 진실을 밝혀나가는 1인칭 탈출형 게임입니다.                            
+                        </p>
+                        <div class="project-links">
+                            <a href="https://youtu.be/C8iW5rPfa5Q" target="_blank">시연 영상</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="C:\Users\NSU\HTML\UFT.png" alt="프로젝트 2 이미지">
+                    <div class="project-content">
+                        <h3>[Universe Food Truck]</h3>
+                        <p>
+                            언리얼 5로 개발한 1인칭 싱글플레이 생존 경영 시뮬레이션 게임입니다.
+                            식재료의 희귀도와 조합을 통해 수익을 결정하는 부분이 핵심입니다. 
+                        </p>
+                        <div class="project-links">
+                            <a href="https://youtu.be/C3TXhupN7is" target="_blank">시연 영상</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="C:\Users\NSU\HTML\Live_Road.png?text=Live :+Road" alt="프로젝트 3 이미지">
+                    <div class="project-content">
+                        <h3>[Live : Road]</h3>
+                        <p>
+                            언리얼 5로 개발한 FPS게임입니다. 
+                            각 라운드 마다 적이 등장하며 적을 죽여 경험치 또는 물건을 통해
+                            현재 가지고 있는 아이템을 강화시킬 수 있습니다.
+             
+                        </p>
+                        <div class="project-links">
+                            <a href="https://github.com/stombag/UE5_Live_Road.git" target="_blank" class="github">GitHub</a>
+                            <a href="https://youtube.com" target="_blank">시연 영상</a>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="contact" class="fade-in">
+        <h2>CONTACT</h2>
+        <div class="footer-links">
+            <a href="mailto:ngl104702@naver.com" target="_blank">Email</a>
+            <a href="https://github.com/stombag" target="_blank">GitHub</a>
+        </div>
+        <p>© 2025. [김민혁]. All rights reserved.</p>
+    </footer>
+
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            const clockElement = document.getElementById('clock');
+            if (clockElement) {
+                clockElement.textContent = hours + ':' + minutes + ' ' + ampm;
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+    
+</body>
+</html>
