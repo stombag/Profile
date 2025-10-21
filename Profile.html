@@ -154,7 +154,6 @@
             color: var(--primary-color);
         }
 
-        /* --- [수정] 헤드라인 문구 (제안) --- */
         .hero-section p {
             font-size: 1.3rem;
             color: var(--text-secondary);
@@ -191,7 +190,7 @@
         
         .about-text p {
             font-size: 1.1rem;
-            color: var(--text-color); /* 보조 텍스트보다 잘 보이게 수정 */
+            color: var(--text-color);
             line-height: 1.8;
         }
         
@@ -216,6 +215,54 @@
             font-size: 0.9rem;
             font-weight: bold;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        /* --- [추가] 4.5. Awards (수상 경력) --- */
+        .award-container {
+            display: flex;
+            flex-direction: column; /* 수상 내역을 세로로 쌓음 */
+            gap: 1.5rem; /* 항목 간 간격 */
+        }
+        
+        .award-item {
+            background-color: #2a2a2a; /* 프로젝트 카드보다 살짝 밝은 배경 */
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color); /* 왼쪽에 포인트 컬러 */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .award-item:hover {
+            transform: translateY(-3px); /* 살짝 떠오르는 효과 */
+            box-shadow: 0 4px 10px rgba(0, 170, 255, 0.2);
+        }
+        
+        .award-header {
+            display: flex;
+            justify-content: space-between; /* 제목과 날짜를 양 끝으로 */
+            align-items: center;
+            flex-wrap: wrap; /* 화면 좁아지면 줄바꿈 */
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .award-header h3 {
+            color: var(--text-color);
+            margin-bottom: 0; /* h3 기본 마진 제거 */
+            font-size: 1.25rem;
+        }
+        
+        .award-header .award-date {
+            color: var(--text-secondary);
+            font-weight: bold;
+            font-size: 0.9rem;
+            flex-shrink: 0; /* 날짜가 줄어들지 않도록 */
+        }
+        
+        .award-item p {
+            color: var(--text-secondary);
+            font-size: 1rem;
         }
 
 
@@ -338,6 +385,9 @@
                 width: 100%;
                 flex-grow: 0; 
                 order: 2;
+                /* [수정] 모바일에서 링크가 너무 많아져서 글자 크기/간격 조정 */
+                gap: 1rem;
+                font-size: 0.9rem;
             }
 
             nav #clock {
@@ -358,6 +408,12 @@
             h2 {
                 font-size: 2rem;
             }
+
+            /* [추가] 모바일에서 수상 내역 헤더 정렬 */
+            .award-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
@@ -369,6 +425,7 @@
         
         <div class="nav-links">
             <a href="#about">ABOUT</a>
+            <a href="#awards">AWARDS</a>
             <a href="#projects">PROJECTS</a>
             <a href="#contact">CONTACT</a>
         </div>
@@ -377,8 +434,8 @@
     </nav>
 
     <header id="home" class="hero-section fade-in">
-        <h1>안녕하세요 저는 <span class="highlight">김민혁</span>입니다.</h1>
-        <p>저는 기술을 통해 사람들에게 재미를 주고 싶은 게임 개발자입니다.</p>
+        <h1>안녕하세요 제 이름은 <span class="highlight">김민혁</span>입니다.</h1>
+        <p>저는 아이디어를 안정적인 코드로 완성시키는 게임 프로그래머입니다.</p>
         <a href="#projects" class="hero-button">내 프로젝트 보기</a>
     </header>
 
@@ -397,6 +454,7 @@
                         팀원의 노력이 빛날 수 있도록 기술로 서포트하고, '함께' 만든 게임을 누군가 즐겁게 플레이하는 모습을 보는 것이 제가 개발을 사랑하는 이유입니다.
                     </p>
                 </div>
+                
                 <div class="skills-list">
                     <h3>Engines</h3>
                     <div class="skills-container">
@@ -421,17 +479,50 @@
         </section>
 
 
+        <section id="awards" class="fade-in">
+            <h2>AWARDS</h2>
+            <div class="award-container">
+                
+                <div class="award-item">
+                    <div class="award-header">
+                        <h3>[장려상] - 2024년 붕어빵 유니버스 공모전</h3>
+                        <span class="award-date">[2024. 04]</span>
+                    </div>
+                </div>
+
+                <div class="award-item">
+                    <div class="award-header">
+                        <h3>[우수상] - 제7회 캡스톤디자인 대학생 경진대회</h3>
+                        <span class="award-date">[2024. 06]</span>
+                    </div>              
+                </div>
+                
+                <div class="award-item">
+                    <div class="award-header">
+                        <h3>[최우수상] 남서울대학교 제 10회 VRAR콘테츠 전시회</h3>
+                        <span class="award-date">[2024. 09]</span>
+                    </div>              
+                </div>
+                <div class="award-item">
+                    <div class="award-header">
+                        <h3>[작품상]충남테크노파크 산업인력개발센터장</h3>
+                        <span class="award-date">[2025. 10]</span>
+                    </div>              
+                </div>
+            </div>
+        </section>
         <section id="projects" class="fade-in">
             <h2>PROJECTS</h2>
             
             <div class="project-container">
-                                <article class="project-card">
-                    <img src="Image/HorrorTitle.png" alt="프로젝트 1 이미지">
+            
+                <article class="project-card">
+                    <img src="Image/HorrorTitle.png" alt="The Things Left Behind 프로젝트 이미지">
                     <div class="project-content">
                         <h3>[The Things Left Behind]</h3>
                         <p>
                             언리얼 5로 개발한 VR 공포 게임입니다. 
-                            폐병원에서 정체불명의 존재를 피해 진실을 밝혀나가는 1인칭 탈출형 게임입니다.                            
+                            폐병원에서 정체불명의 존재를 피해 진실을 밝혀나가는 1인칭 탈출형 게임입니다.
                         </p>
                         <div class="project-links">
                             <a href="https://youtu.be/C8iW5rPfa5Q" target="_blank">시연 영상</a>
@@ -440,7 +531,7 @@
                 </article>
 
                 <article class="project-card">
-                    <img src="Image/UFT.png" alt="프로젝트 2 이미지">
+                    <img src="Image/UFT.png" alt="Universe Food Truck 프로젝트 이미지">
                     <div class="project-content">
                         <h3>[Universe Food Truck]</h3>
                         <p>
@@ -454,14 +545,13 @@
                 </article>
 
                 <article class="project-card">
-                    <img src="Image/Live_Road.png" alt="프로젝트 3 이미지">
+                    <img src="Image/Live_Road.png" alt="Live : Road 프로젝트 이미지">
                     <div class="project-content">
                         <h3>[Live : Road]</h3>
                         <p>
                             언리얼 5로 개발한 FPS게임입니다. 
                             각 라운드 마다 적이 등장하며 적을 죽여 경험치 또는 물건을 통해
                             현재 가지고 있는 아이템을 강화시킬 수 있습니다.
-             
                         </p>
                         <div class="project-links">
                             <a href="https://github.com/stombag/UE5_Live_Road.git" target="_blank" class="github">GitHub</a>
