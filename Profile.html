@@ -181,7 +181,34 @@
             display: flex;
             gap: 2rem;
             flex-wrap: wrap;
+            align-items: center; /* [수정] 세로 중앙 정렬 */
         }
+        
+        /* ▼ [추가] 프로필 사진 박스 스타일 ▼ */
+        .profile-picture-container {
+            flex-basis: 220px; /* 박스의 기본 너비 */
+            min-width: 180px;  /* 박스의 최소 너비 */
+            flex-grow: 0;      /* 박스 크기가 유연하게 커지지 않도록 함 */
+            text-align: center;
+            padding: 1rem;     /* 박스 내부 여백 */
+            background-color: #2a2a2a; /* 박스 배경색 */
+            border-radius: 10px; /* 박스 모서리 둥글게 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* 박스 그림자 */
+            border: 2px solid var(--primary-color); /* 박스 테두리 */
+            display: flex;
+            justify-content: center; /* 가로 중앙 정렬 */
+            align-items: center; /* 세로 중앙 정렬 */
+        }
+        
+        .profile-picture-container img {
+            width: 150px;      /* 이미지 자체의 크기 (박스보다 작게) */
+            height: 150px;
+            border-radius: 50%; /* 이미지를 원형으로 유지 */
+            object-fit: cover;  /* 이미지가 찌그러지지 않게 비율 유지 */
+            border: 3px solid #f0f0f0; /* 이미지 테두리색 (하얀색 계열) */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* 이미지 그림자 */
+        }
+        /* ▲ [추가] 프로필 사진 박스 스타일 ▲ */
         
         .about-text, .skills-list {
             flex: 1;
@@ -414,6 +441,25 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+            
+            /* ▼ [추가] 모바일 프로필 사진 정렬 ▼ */
+            .about-container {
+                flex-direction: column; /* 모바일에서 세로로 쌓이도록 */
+            }
+            
+            .profile-picture-container {
+                order: -1; /* 프로필 사진을 맨 위로 올림 */
+                margin-bottom: 2rem;
+                flex-basis: auto; /* 모바일에서는 flex-basis 재설정 */
+                width: 180px; /* 모바일에서 박스 너비 고정 */
+                height: 180px; /* 모바일에서 박스 높이 고정 */
+            }
+
+            .profile-picture-container img {
+                width: 120px; /* 모바일에서 이미지 크기 조절 */
+                height: 120px;
+            }
+            /* ▲ [추가] 모바일 프로필 사진 정렬 ▲ */
         }
     </style>
 </head>
@@ -448,6 +494,7 @@
                 <div class="profile-picture-container">
                     <img src="Image/KakaoTalk_20251025_150944763.jpg" alt="김민혁 프로필 사진">
                 </div>
+                
                 <div class="about-text">
                     <p>
                         저에게 코딩은 '생명을 불어넣는' 일입니다.
@@ -497,20 +544,20 @@
                     <div class="award-header">
                         <h3>[우수상] - 제7회 캡스톤디자인 대학생 경진대회</h3>
                         <span class="award-date">[2024. 06]</span>
-                    </div>              
+                    </div> 
                 </div>
                 
                 <div class="award-item">
                     <div class="award-header">
                         <h3>[최우수상] - 남서울대학교 제 10회 VRAR콘테츠 전시회</h3>
                         <span class="award-date">[2024. 09]</span>
-                    </div>              
+                    </div> 
                 </div>
                 <div class="award-item">
                     <div class="award-header">
                         <h3>[작품상] - 충남테크노파크 산업인력개발센터장</h3>
                         <span class="award-date">[2025. 10]</span>
-                    </div>              
+                    </div> 
                 </div>
             </div>
         </section>
