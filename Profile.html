@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -185,10 +184,10 @@
             align-items: center; /* [수정] 세로 중앙 정렬 */
         }
         
-        /* ▼ [추가] 프로필 사진 박스 스타일 ▼ */
+        /* ▼ [수정] 프로필 사진 박스 스타일 (PC) ▼ */
         .profile-picture-container {
-            flex-basis: 220px; /* 박스의 기본 너비 */
-            min-width: 180px;  /* 박스의 최소 너비 */
+            flex-basis: 300px; /* [수정] 박스의 기본 너비 (크게) */
+            min-width: 250px;  /* [수정] 박스의 최소 너비 (크게) */
             flex-grow: 0;      /* 박스 크기가 유연하게 커지지 않도록 함 */
             text-align: center;
             padding: 1rem;     /* 박스 내부 여백 */
@@ -202,14 +201,14 @@
         }
         
         .profile-picture-container img {
-            width: 150px;      /* 이미지 자체의 크기 (박스보다 작게) */
-            height: 150px;
+            width: 230px;      /* [수정] 이미지 자체의 크기 (크게) */
+            height: 230px;     /* [수정] 이미지 자체의 크기 (크게) */
             border-radius: 50%; /* 이미지를 원형으로 유지 */
             object-fit: cover;  /* 이미지가 찌그러지지 않게 비율 유지 */
             border: 3px solid #f0f0f0; /* 이미지 테두리색 (하얀색 계열) */
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* 이미지 그림자 */
         }
-        /* ▲ [추가] 프로필 사진 박스 스타일 ▲ */
+        /* ▲ [수정] 프로필 사진 박스 스타일 (PC) ▲ */
         
         .about-text, .skills-list {
             flex: 1;
