@@ -18,15 +18,8 @@
             --text-secondary: #aaaaaa;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             background-color: var(--bg-color);
@@ -37,18 +30,18 @@
             overflow-x: hidden;
         }
 
-        /* 🔥 3D Canvas를 전체 화면 배경으로 */
+        /* 🔥 3D Canvas (전체 화면 배경) */
         #three-container canvas {
             position: fixed !important;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             width: 100vw !important;
             height: 100vh !important;
-            z-index: -1; /* 뒤로 보내기 */
-            pointer-events: none; /* 클릭 방해 제거 */
-            opacity: 0.35; /* 너무 튀지 않게 */
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.35;
         }
 
+        /* NAV */
         nav {
             background-color: var(--surface-color);
             padding: 1rem 2rem;
@@ -60,24 +53,9 @@
             top: 0;
             z-index: 10;
         }
-
-        nav .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--text-color);
-            text-decoration: none;
-        }
-
-        nav .logo span {
-            color: var(--primary-color);
-        }
-
-        nav .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            flex-grow: 1;
-            justify-content: center;
-        }
+        nav .logo { font-size: 1.5rem; font-weight: bold; text-decoration: none; color: var(--text-color); }
+        nav .logo span { color: var(--primary-color); }
+        nav .nav-links { display: flex; gap: 1.5rem; flex-grow: 1; justify-content: center; }
 
         nav a {
             color: var(--text-color);
@@ -85,46 +63,12 @@
             font-weight: bold;
             padding: 0.5rem;
             border-radius: 5px;
-            transition: background-color 0.3s ease;
         }
+        nav a:hover { background-color: var(--primary-color); color: var(--bg-color); }
 
-        nav a:hover {
-            background-color: var(--primary-color);
-            color: var(--bg-color);
-        }
+        nav #clock { font-size: 1.2rem; font-weight: bold; min-width: 120px; text-align: right; }
 
-        nav #clock {
-            font-size: 1.2rem;
-            font-weight: bold;
-            min-width: 120px;
-            text-align: right;
-        }
-
-        section {
-            width: 90%;
-            max-width: 1100px;
-            margin: 4rem auto;
-            padding: 2rem;
-            border-radius: 10px;
-            background-color: var(--surface-color);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            position: relative;
-            z-index: 1;
-        }
-
-        h1, h2, h3 {
-            margin-bottom: 1rem;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            text-align: center;
-            border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 0.5rem;
-            width: fit-content;
-            margin: 0 auto 3rem auto;
-        }
-
+        /* HERO */
         .hero-section {
             min-height: 80vh;
             display: flex;
@@ -134,42 +78,102 @@
             text-align: center;
             background-color: transparent;
             box-shadow: none;
-            position: relative;
-            z-index: 1;
         }
-
-        .hero-section h1 {
-            font-size: 3.5rem;
-        }
-
-        .hero-section .highlight {
-            color: var(--primary-color);
-        }
-
+        .hero-section h1 { font-size: 3.5rem; }
+        .hero-section .highlight { color: var(--primary-color); }
         .hero-section p {
             font-size: 1.3rem;
             color: var(--text-secondary);
             margin-bottom: 1.5rem;
         }
-
         .hero-button {
             background-color: var(--primary-color);
-            color: var(--bg-color);
+            color: #000;
             padding: 0.8rem 2rem;
-            border-radius: 5px;
             font-weight: bold;
+            border-radius: 5px;
             text-decoration: none;
         }
+
+        /* SECTION STYLE */
+        section {
+            width: 90%;
+            max-width: 1100px;
+            margin: 4rem auto;
+            padding: 2rem;
+            border-radius: 10px;
+            background-color: var(--surface-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .4);
+            z-index: 1;
+            position: relative;
+        }
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            width: fit-content;
+            margin: 0 auto 3rem auto;
+        }
+
+        /* ABOUT */
+        .about-container { display: flex; gap: 2rem; flex-wrap: wrap; align-items: center; }
+
+        .profile-picture-container {
+            flex-basis: 300px;
+            min-width: 250px;
+            text-align: center;
+            padding: 1rem;
+            background: #2a2a2a;
+            border-radius: 12px;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,.5);
+        }
+        .profile-picture-container img {
+            width: 230px; height: 230px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+        }
+
+        .skills-list h3 { color: var(--primary-color); margin-top: 1rem; }
+
+        /* AWARDS */
+        .award-container { display: flex; flex-direction: column; gap: 1.2rem; }
+        .award-item {
+            background: #2a2a2a;
+            padding: 1.5rem;
+            border-left: 5px solid var(--primary-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,.3);
+        }
+        .award-header { display: flex; justify-content: space-between; }
+
+        /* PROJECTS */
+        .project-container { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 2rem; }
+        .project-card {
+            background: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,.5);
+            display: flex;
+            flex-direction: column;
+        }
+        .project-card img { width: 100%; height: 200px; object-fit: cover; border-bottom: 3px solid var(--primary-color); }
+        .project-content { padding: 1.5rem; flex-grow: 1; }
+
+        /* FOOTER */
+        footer { text-align: center; padding: 3rem 1rem; background: var(--surface-color); margin-top: 4rem; }
 
     </style>
 </head>
 
 <body>
 
-    <!-- ⭐ 3D 배경 캔버스 (Three.js가 여기에 렌더링됨) -->
+    <!-- ⭐ 3D Background 영역 -->
     <div id="three-container"></div>
 
-    <!-- 전체 기존 포트폴리오 시작 -->
+    <!-- ⭐ NAVIGATION -->
     <nav>
         <a href="#" class="logo"><span>Home</span></a>
         <div class="nav-links">
@@ -181,19 +185,96 @@
         <div id="clock"></div>
     </nav>
 
-    <header id="home" class="hero-section fade-in">
+    <!-- ⭐ HERO SECTION -->
+    <header id="home" class="hero-section">
         <h1>안녕하세요 제 이름은 <span class="highlight">김민혁</span>입니다.</h1>
         <p>저는 아이디어를 안정적인 코드로 완성시키는 게임 프로그래머입니다.</p>
         <a href="#projects" class="hero-button">내 프로젝트 보기</a>
     </header>
 
-    <!-- (여기에 ABOUT, AWARDS, PROJECTS, FOOTER 전체 기존 코드 그대로 유지) -->
-    <!-- 생략: 이미 너무 길어서 위에서 제공한 그대로 사용하면 됨 -->
-    
-    <!-- ----------------------------------------- -->
-    <!-- 🔥 아래에 3D 오브젝트 스크립트가 들어감 -->
-    <!-- ----------------------------------------- -->
+    <!-- ⭐ ABOUT -->
+    <section id="about">
+        <h2>ABOUT ME</h2>
+        <div class="about-container">
+            <div class="profile-picture-container">
+                <img src="Image/MyFace.jpg">
+            </div>
+            <div>
+                <p>
+                    저에게 코딩은 '생명을 불어넣는' 일입니다.
+                    <br><br>
+                    아티스트의 멋진 3D 캐릭터가 제 코드를 만나 살아 움직이는 순간,
+                    저는 가장 큰 보람을 느낍니다.
+                </p>
+            </div>
+        </div>
+    </section>
 
+    <!-- ⭐ AWARDS -->
+    <section id="awards">
+        <h2>AWARDS</h2>
+        <div class="award-container">
+            <div class="award-item">
+                <div class="award-header">
+                    <h3>[장려상] - 2024년 붕어빵 유니버스 공모전</h3>
+                    <span>[2024.04]</span>
+                </div>
+            </div>
+            <div class="award-item">
+                <div class="award-header">
+                    <h3>[우수상] - 제7회 캡스톤디자인 대학생 경진대회</h3>
+                    <span>[2024.06]</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ⭐ PROJECTS -->
+    <section id="projects">
+        <h2>PROJECTS</h2>
+        <div class="project-container">
+            <article class="project-card">
+                <img src="Image/HorrorTitle.png">
+                <div class="project-content">
+                    <h3>[The Things Left Behind]</h3>
+                    <p>언리얼5 VR 공포 탈출 게임 프로젝트</p>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <img src="Image/UFT.png">
+                <div class="project-content">
+                    <h3>[Universe Food Truck]</h3>
+                    <p>1인칭 생존 경영 시뮬레이션 게임</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ⭐ CONTACT -->
+    <footer id="contact">
+        <h2>CONTACT</h2>
+        <a href="mailto:ngl104702@naver.com">Email</a> |
+        <a href="https://github.com/stombag">GitHub</a>
+        <p>© 2025 김민혁 All rights reserved.</p>
+    </footer>
+
+    <!-- ⭐ CLOCK -->
+    <script>
+        function updateClock() {
+            const now = new Date();
+            let h = now.getHours();
+            let m = now.getMinutes();
+            const ampm = h >= 12 ? "PM" : "AM";
+            h = h % 12 || 12;
+            m = m < 10 ? "0" + m : m;
+            document.getElementById("clock").textContent = `${h}:${m} ${ampm}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+
+    <!-- ⭐ THREE.JS + MORPHING SHAPE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
@@ -214,26 +295,23 @@
 
         baseGeo.vertices.forEach(v => geo.vertices.push(v.clone()));
 
-        const baseVertexCount = baseGeo.vertices.length;
+        const baseCount = baseGeo.vertices.length;
         baseGeo.vertices.forEach(v => {
-            const dir = v.clone().normalize();
-            const spikeTip = v.clone().add(dir.multiplyScalar(spikeLength));
-            geo.vertices.push(spikeTip);
+            const tip = v.clone().normalize().multiplyScalar(spikeLength).add(v);
+            geo.vertices.push(tip);
         });
 
         baseGeo.faces.forEach(f => {
             const a = f.a, b = f.b, c = f.c;
-            const spikeA = a + baseVertexCount;
-            const spikeB = b + baseVertexCount;
-            const spikeC = c + baseVertexCount;
-
-            geo.faces.push(new THREE.Face3(a, b, spikeA));
-            geo.faces.push(new THREE.Face3(b, c, spikeB));
-            geo.faces.push(new THREE.Face3(c, a, spikeC));
+            const sa = a + baseCount, sb = b + baseCount, sc = c + baseCount;
+            geo.faces.push(new THREE.Face3(a, b, sa));
+            geo.faces.push(new THREE.Face3(b, c, sb));
+            geo.faces.push(new THREE.Face3(c, a, sc));
         });
 
         geo.computeFaceNormals();
         geo.computeVertexNormals();
+
         return geo;
     }
 
@@ -249,53 +327,51 @@
     }
 
     const shapeList = ["tetra", "cube", "octa", "ico", "dodeca", "star"];
-    let currentIndex = 0;
+    let idx = 0;
 
-    let currentEdges = new THREE.EdgesGeometry(makeGeometry(shapeList[currentIndex]));
-    let mesh = new THREE.LineSegments(currentEdges, lineMaterial);
+    let edges = new THREE.EdgesGeometry(makeGeometry(shapeList[idx]));
+    let mesh = new THREE.LineSegments(edges, lineMaterial);
     scene.add(mesh);
 
     function morphToNext() {
-        let prevPositions = mesh.geometry.attributes.position.array;
+        let prev = mesh.geometry.attributes.position.array;
 
-        currentIndex = (currentIndex + 1) % shapeList.length;
+        idx = (idx + 1) % shapeList.length;
+        let nextGeo = new THREE.EdgesGeometry(makeGeometry(shapeList[idx]));
+        let next = nextGeo.attributes.position.array;
 
-        let newEdgesGeo = new THREE.EdgesGeometry(makeGeometry(shapeList[currentIndex]));
-        let newPositions = newEdgesGeo.attributes.position.array;
+        const len = Math.max(prev.length, next.length);
 
-        const maxLen = Math.max(prevPositions.length, newPositions.length);
-
-        function pad(arr, len) {
-            const out = new Float32Array(len);
+        function pad(arr, size) {
+            const out = new Float32Array(size);
             out.set(arr);
             return out;
         }
 
-        prevPositions = pad(prevPositions, maxLen);
-        newPositions = pad(newPositions, maxLen);
+        prev = pad(prev, len);
+        next = pad(next, len);
 
-        const buffer = new THREE.BufferAttribute(prevPositions.slice(), 3);
+        const buffer = new THREE.BufferAttribute(prev.slice(), 3);
         mesh.geometry.setAttribute("position", buffer);
 
         const start = performance.now();
         const duration = 900;
 
-        function update() {
-            const now = performance.now();
-            const t = Math.min((now - start) / duration, 1);
-
+        function animateMorph() {
+            const t = Math.min((performance.now() - start) / duration, 1);
             const pos = mesh.geometry.attributes.position.array;
-            for (let i = 0; i < maxLen; i++) {
-                pos[i] = prevPositions[i] + (newPositions[i] - prevPositions[i]) * t;
+
+            for (let i = 0; i < len; i++) {
+                pos[i] = prev[i] + (next[i] - prev[i]) * t;
             }
 
             mesh.geometry.attributes.position.needsUpdate = true;
 
-            if (t < 1) requestAnimationFrame(update);
-            else mesh.geometry = newEdgesGeo;
+            if (t < 1) requestAnimationFrame(animateMorph);
+            else mesh.geometry = nextGeo;
         }
 
-        update();
+        animateMorph();
     }
 
     setInterval(morphToNext, 5000);
