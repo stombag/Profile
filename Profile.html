@@ -1,545 +1,838 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김민혁 - 게임 개발자 포트폴리오</title>
 
-<title>김민혁 - 게임 개발자 포트폴리오</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- 1. 기본 설정 --- */
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1e1e1e;
+            --primary-color: #00aaff;
+            --text-color: #f0f0f0; 
+            --text-secondary: #aaaaaa;
+        }
 
-<style>
-    :root {
-        --bg-color: #121212;
-        --surface-color: #1e1e1e;
-        --primary-color: #00aaff;
-        --text-color: #f0f0f0; 
-        --text-secondary: #aaaaaa;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+        }
 
-    body {
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        font-family: 'Noto Sans KR', sans-serif;
-        line-height: 1.6;
-        overflow-x: hidden;
-    }
+        /* --- 2. 네비게이션 바 (메뉴) --- */
+        nav {
+            background-color: var(--surface-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    /* 3D Canvas 배경 (Hero 뒤로) */
-    #three-container canvas {
-        position: fixed !important;
-        top: 0;
-        left: 0;
-        width: 100vw !important;
-        height: 100vh !important;
-        z-index: -1;
-        pointer-events: none;
-        opacity: 0.4;
-    }
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+            text-decoration: none;
+        }
 
-    /* --- 네비게이션 --- */
-    nav {
-        background-color: var(--surface-color);
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 2px solid var(--primary-color);
-        position: sticky;
-        top: 0;
-        z-index: 10;
-    }
+        nav .logo span {
+            color: var(--primary-color);
+        }
 
-    nav .logo { font-size: 1.5rem; font-weight: bold; color: var(--text-color); text-decoration: none; }
-    nav .logo span { color: var(--primary-color); }
+        nav .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-grow: 1;
+            justify-content: center;
+        }
 
-    nav .nav-links {
-        display: flex;
-        gap: 1.5rem;
-        justify-content: center;
-        flex-grow: 1;
-    }
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
 
-    nav a {
-        color: var(--text-color);
-        text-decoration: none;
-        font-weight: bold;
-        padding: 0.5rem;
-        border-radius: 5px;
-        transition: background 0.3s;
-    }
-    nav a:hover { background-color: var(--primary-color); color: var(--bg-color); }
+        nav a:hover {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+        }
 
-    /* 시계 */
-    nav #clock { font-size: 1.2rem; font-weight: bold; min-width: 120px; text-align: right; }
+        /* --- 시계 스타일 --- */
+        nav #clock {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-color); 
+            padding: 0.5rem;
+            min-width: 120px; 
+            text-align: right;
+        }
 
-    /* 공통 섹션 */
-    section {
-        width: 90%;
-        max-width: 1100px;
-        margin: 4rem auto;
-        padding: 2rem;
-        border-radius: 10px;
-        background-color: var(--surface-color);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    }
+        /* --- 공용 섹션 스타일 --- */
+        section {
+            width: 90%;
+            max-width: 1100px;
+            margin: 4rem auto;
+            padding: 2rem;
+            border-radius: 10px;
+            background-color: var(--surface-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
 
-    h2 {
-        font-size: 2.5rem;
-        text-align: center;
-        border-bottom: 3px solid var(--primary-color);
-        width: fit-content;
-        margin: 0 auto 3rem;
-        padding-bottom: 0.5rem;
-    }
+        h1, h2, h3 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
 
-    .fade-in {
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeIn 0.8s ease-out forwards;
-    }
-    @keyframes fadeIn {
-        to { opacity: 1; transform: translateY(0); }
-    }
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem;
+        }
 
-    /* Hero */
-    .hero-section {
-        min-height: 80vh;
-        background: transparent;
-        box-shadow: none;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        animation-delay: 0.3s;
-    }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
 
-    .hero-section h1 { font-size: 3.5rem; }
-    .highlight { color: var(--primary-color); }
-    .hero-section p { font-size: 1.3rem; color: var(--text-secondary); margin-bottom: 1.3rem; }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .hero-button {
-        background-color: var(--primary-color);
-        color: var(--bg-color);
-        padding: 0.8rem 2rem;
-        font-size: 1rem;
-        font-weight: bold;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: 0.3s;
-    }
+        /* --- 3. Hero (메인) 섹션 --- */
+        .hero-section {
+            background-color: var(--bg-color);
+            box-shadow: none;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            animation-delay: 0.2s;
+        }
 
-    .hero-button:hover { background: #fff; transform: scale(1.05); }
+        .hero-section h1 {
+            font-size: 3.5rem;
+        }
 
-    /* About & Skills */
-    .about-container {
-        display: flex;
-        gap: 2rem;
-        flex-wrap: wrap;
-        align-items: center;
-    }
+        .hero-section .highlight {
+            color: var(--primary-color);
+        }
 
-    .profile-picture-container {
-        min-width: 250px;
-        flex-basis: 300px;
-        background: #2a2a2a;
-        border-radius: 10px;
-        border: 2px solid var(--primary-color);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        padding: 1rem;
-        display: flex; justify-content: center; align-items: center;
-    }
+        .hero-section p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
 
-    .profile-picture-container img {
-        width: 230px; height: 230px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 3px solid white;
-    }
+        .hero-button {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
 
-    .skills-list h3 { color: var(--primary-color); margin-top: 1rem; }
+        .hero-button:hover {
+            transform: scale(1.05);
+            background-color: #fff;
+        }
 
-    .skills-container { display: flex; flex-wrap: wrap; gap: .5rem; }
-    .skill-tag {
-        background: #333;
-        padding: .5rem 1rem;
-        border-radius: 20px;
-        font-size: .9rem;
-        font-weight: bold;
-        color: var(--text-color);
-    }
+        /* --- 4. About (자기소개) & Skills (보유 기술) --- */
+        .about-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center; /* [수정] 세로 중앙 정렬 */
+        }
 
-    /* Awards */
-    .award-container { display: flex; flex-direction: column; gap: 1.5rem; }
-    .award-item {
-        background: #2a2a2a;
-        padding: 1.5rem;
-        border-radius: 8px;
-        border-left: 5px solid var(--primary-color);
-        box-shadow: 0 3px 8px rgba(0,0,0,0.4);
-    }
+        /* ▼ [수정] 프로필 사진 박스 스타일 (PC) ▼ */
+        .profile-picture-container {
+            flex-basis: 300px; /* [수정] 박스의 기본 너비 (크게) */
+            min-width: 250px;  /* [수정] 박스의 최소 너비 (크게) */
+            flex-grow: 0;      /* 박스 크기가 유연하게 커지지 않도록 함 */
+            text-align: center;
+            padding: 1rem;     /* 박스 내부 여백 */
+            background-color: #2a2a2a; /* 박스 배경색 */
+            border-radius: 10px; /* 박스 모서리 둥글게 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* 박스 그림자 */
+            border: 2px solid var(--primary-color); /* 박스 테두리 */
+            display: flex;
+            justify-content: center; /* 가로 중앙 정렬 */
+            align-items: center; /* 세로 중앙 정렬 */
+        }
 
-    .award-header {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        margin-bottom: .5rem;
-    }
+        .profile-picture-container img {
+            width: 230px;      /* [수정] 이미지 자체의 크기 (크게) */
+            height: 230px;     /* [수정] 이미지 자체의 크기 (크게) */
+            border-radius: 50%; /* 이미지를 원형으로 유지 */
+            object-fit: cover;  /* 이미지가 찌그러지지 않게 비율 유지 */
+            border: 3px solid #f0f0f0; /* 이미지 테두리색 (하얀색 계열) */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* 이미지 그림자 */
+        }
+        /* ▲ [수정] 프로필 사진 박스 스타일 (PC) ▲ */
 
-    /* Projects */
-    .project-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-        gap: 2rem;
-    }
+        .about-text, .skills-list {
+            flex: 1;
+            min-width: 300px;
+        }
 
-    .project-card {
-        background: #2a2a2a;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        transition: 0.3s;
-        display: flex; flex-direction: column;
-    }
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            line-height: 1.8;
+        }
 
-    .project-card:hover { transform: translateY(-5px); }
+        .skills-list h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
 
-    .project-card img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-bottom: 3px solid var(--primary-color);
-    }
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
 
-    /* Footer */
-    footer {
-        margin-top: 4rem;
-        padding: 3rem 1rem;
-        background: var(--surface-color);
-    }
+        .skill-tag {
+            background-color: #333;
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
 
-    footer p { color: var(--text-secondary); }
+        /* --- [추가] 4.5. Awards (수상 경력) --- */
+        .award-container {
+            display: flex;
+            flex-direction: column; /* 수상 내역을 세로로 쌓음 */
+            gap: 1.5rem; /* 항목 간 간격 */
+        }
 
-</style>
+        .award-item {
+            background-color: #2a2a2a; /* 프로젝트 카드보다 살짝 밝은 배경 */
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color); /* 왼쪽에 포인트 컬러 */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .award-item:hover {
+            transform: translateY(-3px); /* 살짝 떠오르는 효과 */
+            box-shadow: 0 4px 10px rgba(0, 170, 255, 0.2);
+        }
+
+        .award-header {
+            display: flex;
+            justify-content: space-between; /* 제목과 날짜를 양 끝으로 */
+            align-items: center;
+            flex-wrap: wrap; /* 화면 좁아지면 줄바꿈 */
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .award-header h3 {
+            color: var(--text-color);
+            margin-bottom: 0; /* h3 기본 마진 제거 */
+            font-size: 1.25rem;
+        }
+
+        .award-header .award-date {
+            color: var(--text-secondary);
+            font-weight: bold;
+            font-size: 0.9rem;
+            flex-shrink: 0; /* 날짜가 줄어들지 않도록 */
+        }
+
+        .award-item p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+
+        /* --- 5. Projects (프로젝트) --- */
+        .project-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            animation-delay: 0.4s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 170, 255, 0.2);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .project-content p {
+            color: var(--text-secondary);
+            flex-grow: 1;
+            margin-bottom: 1rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .project-links a {
+            flex: 1;
+            text-align: center;
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            text-decoration: none;
+            padding: 0.75rem 0;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .project-links a.github {
+            background-color: #444;
+            color: var(--text-color);
+        }
+
+        .project-links a:hover {
+            background-color: #fff;
+            color: var(--bg-color);
+        }
+
+        /* --- 6. Footer (하단) --- */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            background-color: var(--surface-color);
+            border-top: 1px solid #333;
+            margin-top: 4rem;
+        }
+
+        .footer-links {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* --- 7. 반응형 웹 (모바일) --- */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav .nav-links {
+                justify-content: center;
+                width: 100%;
+                flex-grow: 0; 
+                order: 2;
+                /* [수정] 모바일에서 링크가 너무 많아져서 글자 크기/간격 조정 */
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            nav #clock {
+                order: 1;
+                text-align: center;
+                width: 100%;
+                padding: 0;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-section p {
+                font-size: 1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            /* [추가] 모바일에서 수상 내역 헤더 정렬 */
+            .award-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            /* ▼ [추가] 모바일 프로필 사진 정렬 ▼ */
+            .about-container {
+                flex-direction: column; /* 모바일에서 세로로 쌓이도록 */
+            }
+
+            .profile-picture-container {
+                order: -1; /* 프로필 사진을 맨 위로 올림 */
+                margin-bottom: 2rem;
+                flex-basis: auto; /* 모바일에서는 flex-basis 재설정 */
+                width: 180px; /* 모바일에서 박스 너비 고정 */
+                height: 180px; /* 모바일에서 박스 높이 고정 */
+            }
+
+            .profile-picture-container img {
+                width: 120px; /* 모바일에서 이미지 크기 조절 */
+                height: 120px;
+            }
+            /* ▲ [추가] 모바일 프로필 사진 정렬 ▲ */
+        }
+
+                #three-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+}
+
+#three-container canvas {
+    width: 100vw !important;
+    height: 100vh !important;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    z-index: -1 !important;
+    pointer-events: none !important;
+}
+
+
+
+    </style>
 </head>
 
 <body>
+    
+    <div id="three-container"></div>
+    <nav>
+        <a href="#" class="logo"><span>Home</span></a>
 
-<!-- 3D 오브젝트가 들어갈 Canvas -->
-<div id="three-container"></div>
-
-<nav>
-    <a href="#" class="logo"><span>Home</span></a>
-
-    <div class="nav-links">
-        <a href="#about">ABOUT</a>
-        <a href="#awards">AWARDS</a>
-        <a href="#projects">PROJECTS</a>
-        <a href="#contact">CONTACT</a>
-    </div>
-
-    <div id="clock"></div>
-</nav>
-
-<header id="home" class="hero-section fade-in">
-    <h1>안녕하세요 제 이름은 <span class="highlight">김민혁</span>입니다.</h1>
-    <p>저는 아이디어를 안정적인 코드로 완성시키는 게임 프로그래머입니다.</p>
-    <a href="#projects" class="hero-button">내 프로젝트 보기</a>
-</header>
-
-<main>
-    <!-- ABOUT -->
-    <section id="about" class="fade-in">
-        <h2>ABOUT ME</h2>
-        <div class="about-container">
-
-            <div class="profile-picture-container">
-                <img src="Image/MyFace.jpg" alt="김민혁 프로필">
-            </div>
-
-            <div class="about-text">
-                <p>
-                    저에게 코딩은 '생명을 불어넣는' 일입니다.<br><br>
-                    아티스트의 멋진 3D 캐릭터가 제 코드를 만나 비로소 살아 움직이고,
-                    기획자의 아이디어가 실제 플레이어의 '재미'로 탄생하는 순간
-                    가장 큰 보람을 느낍니다.<br><br>
-                    팀원의 노력이 빛날 수 있도록 기술적으로 지원하며,
-                    함께 만든 게임을 누군가 즐겁게 플레이하는 모습을 보는 것이
-                    제가 개발을 사랑하는 이유입니다.
-                </p>
-            </div>
-
-            <div class="skills-list">
-                <h3>Engines</h3>
-                <div class="skills-container">
-                    <span class="skill-tag">Unreal Engine</span>
-                    <span class="skill-tag">Unity</span>
-                </div>
-
-                <h3>Languages</h3>
-                <div class="skills-container">
-                    <span class="skill-tag">C++</span>
-                    <span class="skill-tag">C#</span>
-                    <span class="skill-tag">Blueprint</span>
-                </div>
-
-                <h3>Tools</h3>
-                <div class="skills-container">
-                    <span class="skill-tag">Git</span>
-                    <span class="skill-tag">GitHub</span>
-                </div>
-            </div>
+        <div class="nav-links">
+            <a href="#about">ABOUT</a>
+            <a href="#awards">AWARDS</a>
+            <a href="#projects">PROJECTS</a>
+            <a href="#contact">CONTACT</a>
         </div>
-    </section>
 
-    <!-- AWARDS -->
-    <section id="awards" class="fade-in">
-        <h2>AWARDS</h2>
+        <div id="clock"></div>
+    </nav>
 
-        <div class="award-container">
+    <header id="home" class="hero-section fade-in">
+        <h1>안녕하세요 제 이름은 <span class="highlight">김민혁</span>입니다.</h1>
+        <p>저는 아이디어를 안정적인 코드로 완성시키는 게임 프로그래머입니다.</p>
+        <a href="#projects" class="hero-button">내 프로젝트 보기</a>
+    </header>
 
-            <div class="award-item">
-                <div class="award-header">
-                    <h3>[장려상] - 붕어빵 유니버스 공모전</h3>
-                    <span class="award-date">2024.04</span>
+    <main>
+
+        <section id="about" class="fade-in">
+            <h2>ABOUT ME</h2>
+            <div class="about-container">
+
+                <div class="profile-picture-container">
+                    <img src="Image/MyFace.jpg" alt="김민혁 프로필 사진">
                 </div>
-            </div>
 
-            <div class="award-item">
-                <div class="award-header">
-                    <h3>[우수상] - 캡스톤 디자인 경진대회</h3>
-                    <span class="award-date">2024.06</span>
+                <div class="about-text">
+                    <p>
+                        저에게 코딩은 '생명을 불어넣는' 일입니다.
+                        <br><br>
+                        아티스트의 멋진 3D 캐릭터가 제 코드를 만나 비로소 살아 움직이고, 기획자의 아이디어가 플레이어의 '재미'로 구현되는 순간에 가장 큰 보람을 느낍니다.
+                        <br><br>
+                        팀원의 노력이 빛날 수 있도록 기술로 서포트하고, '함께' 만든 게임을 누군가 즐겁게 플레이하는 모습을 보는 것이 제가 개발을 사랑하는 이유입니다.
+                    </p>
                 </div>
-            </div>
 
-            <div class="award-item">
-                <div class="award-header">
-                    <h3>[최우수상] - 남서울대 VRAR 콘텐츠 전시회</h3>
-                    <span class="award-date">2024.09</span>
-                </div>
-            </div>
+                <div class="skills-list">
+                    <h3>Engines</h3>
+                    <div class="skills-container">
+                        <span class="skill-tag">Unreal Engine</span>
+                        <span class="skill-tag">Unity</span>
+                    </div>
 
-            <div class="award-item">
-                <div class="award-header">
-                    <h3>[작품상] - 충남테크노파크 산업인력개발센터장</h3>
-                    <span class="award-date">2025.10</span>
-                </div>
-            </div>
+                    <h3>Languages</h3>
+                    <div class="skills-container">
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">C#</span>
+                        <span class="skill-tag">Blueprint</span>
+                    </div>
 
-        </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects" class="fade-in">
-        <h2>PROJECTS</h2>
-
-        <div class="project-container">
-
-            <article class="project-card">
-                <img src="Image/HorrorTitle.png">
-                <div class="project-content">
-                    <h3>[The Things Left Behind]</h3>
-                    <p>언리얼 5로 제작한 VR 공포 게임입니다.</p>
-                    <div class="project-links">
-                        <a href="https://youtu.be/C8iW5rPfa5Q" target="_blank">시연 영상</a>
+                    <h3>Tools</h3>
+                    <div class="skills-container">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">GitHub</span>
                     </div>
                 </div>
-            </article>
+            </div>
+        </section>
 
-            <article class="project-card">
-                <img src="Image/UFT.png">
-                <div class="project-content">
-                    <h3>[Universe Food Truck]</h3>
-                    <p>식재료 조합 시스템이 핵심인 생존 경영 시뮬레이션 게임.</p>
-                    <div class="project-links">
-                        <a href="https://youtu.be/C3TXhupN7is" target="_blank">시연 영상</a>
+
+        <section id="awards" class="fade-in">
+            <h2>AWARDS</h2>
+            <div class="award-container">
+
+                <div class="award-item">
+                    <div class="award-header">
+                        <h3>[장려상] - 2024년 붕어빵 유니버스 공모전</h3>
+                        <span class="award-date">[2024. 04]</span>
                     </div>
                 </div>
-            </article>
 
-            <article class="project-card">
-                <img src="Image/Live_Road.png">
-                <div class="project-content">
-                    <h3>[Live : Road]</h3>
-                    <p>언리얼 5로 제작된 FPS 전투 + 강화 시스템 게임.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/stombag/UE5_Live_Road.git" class="github" target="_blank">GitHub</a>
-                        <a href="https://www.youtube.com/watch?v=ctDmyCysHtQ" target="_blank">시연 영상</a>
-                    </div>
+                <div class="award-item">
+                    <div class="award-header">
+                        <h3>[우수상] - 제7회 캡스톤디자인 대학생 경진대회</h3>
+                        <span class="award-date">[2024. 06]</span>
+                    </div> 
                 </div>
-            </article>
 
+                <div class="award-item">
+                    <div class="award-header">
+                        <h3>[최우수상] - 남서울대학교 제 10회 VRAR콘테츠 전시회</h3>
+                        <h3>[최우수상] - 남서울대학교 제 10회 VRAR콘텐츠 전시회</h3>
+                        <span class="award-date">[2024. 09]</span>
+                    </div> 
+                </div>
+                <div class="award-item">
+                    <div class="award-header">
+                        <h3>[작품상] - 충남테크노파크 산업인력개발센터장</h3>
+                        <span class="award-date">[2025. 10]</span>
+                    </div> 
+                </div>
+            </div>
+        </section>
+        <section id="projects" class="fade-in">
+            <h2>PROJECTS</h2>
+
+            <div class="project-container">
+
+                <article class="project-card">
+                    <img src="Image/HorrorTitle.png" alt="The Things Left Behind 프로젝트 이미지">
+                    <div class="project-content">
+                        <h3>[The Things Left Behind]</h3>
+                        <p>
+                            언리얼 5로 개발한 VR 공포 게임입니다. 
+                            폐병원에서 정체불명의 존재를 피해 진실을 밝혀나가는 1인칭 탈출형 게임입니다.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://youtu.be/C8iW5rPfa5Q" target="_blank">시연 영상</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="Image/UFT.png" alt="Universe Food Truck 프로젝트 이미지">
+                    <div class="project-content">
+                        <h3>[Universe Food Truck]</h3>
+                        <p>
+                            언리얼 5로 개발한 1인칭 싱글플레이 생존 경영 시뮬레이션 게임입니다.
+                            식재료의 희귀도와 조합을 통해 수익을 결정하는 부분이 핵심입니다. 
+                        </p>
+                        <div class="project-links">
+                            <a href="https://youtu.be/C3TXhupN7is" target="_blank">시연 영상</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="Image/Live_Road.png" alt="Live : Road 프로젝트 이미지">
+                    <div class="project-content">
+                        <h3>[Live : Road]</h3>
+                        <p>
+                            언리얼 5로 개발한 FPS게임입니다. 
+                            각 라운드 마다 적이 등장하며 적을 죽여 경험치 또는 물건을 통해
+                            현재 가지고 있는 아이템을 강화시킬 수 있습니다.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://github.com/stombag/UE5_Live_Road.git" target="_blank" class="github">GitHub</a>
+                            <a href="https://www.youtube.com/watch?v=ctDmyCysHtQ">시연 영상</a>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="contact" class="fade-in">
+        <h2>CONTACT</h2>
+        <div class="footer-links">
+            <a href="mailto:ngl104702@naver.com" target="_blank">Email</a>
+            <a href="https://github.com/stombag" target="_blank">GitHub</a>
         </div>
-    </section>
+        <p>© 2025. [김민혁]. All rights reserved.</p>
+    </footer>
 
-</main>
 
-<footer id="contact" class="fade-in">
-    <h2>CONTACT</h2>
-    <div class="footer-links">
-        <a href="mailto:ngl104702@naver.com">Email</a>
-        <a href="https://github.com/stombag" target="_blank">GitHub</a>
-    </div>
-    <p>© 2025. 김민혁. All rights reserved.</p>
-</footer>
-
-<!-- 시계 -->
-<script>
-function updateClock() {
-    const now = new Date();
-    let h = now.getHours();
-    let m = now.getMinutes();
-    const ampm = h >= 12 ? "PM" : "AM";
-    h = h % 12 || 12;
-    if (m < 10) m = "0" + m;
-    document.getElementById("clock").textContent = `${h}:${m} ${ampm}`;
-}
-setInterval(updateClock, 1000);
-updateClock();
-</script>
-
-<!-- Three.js 3D 모핑 오브젝트 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            const clockElement = document.getElementById('clock');
+            if (clockElement) {
+                clockElement.textContent = hours + ':' + minutes + ' ' + ampm;
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <script>
 // =====================================================
-// SCENE
+// SCENE SETUP
 // =====================================================
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 7;
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-
 document.getElementById("three-container").appendChild(renderer.domElement);
 
 // =====================================================
-// MATERIAL
+// MATERIAL (WHITE LINE)
 // =====================================================
 const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
 
+
 // =====================================================
-// SPIKY STAR
+// ⭐ SPIKY STAR GEOMETRY (A-type)
 // =====================================================
 function makeSpikyStarGeometry(radius = 2.0, spikes = 32, spikeLength = 1.4) {
-    const geo = new THREE.Geometry();
-    const baseGeo = new THREE.IcosahedronGeometry(radius, 1);
+  const geo = new THREE.Geometry();
+  const baseGeo = new THREE.IcosahedronGeometry(radius, 1);
 
-    baseGeo.vertices.forEach(v => geo.vertices.push(v.clone()));
+  // Copy base vertices
+  baseGeo.vertices.forEach(v => geo.vertices.push(v.clone()));
 
-    const baseVertexCount = baseGeo.vertices.length;
-    baseGeo.vertices.forEach(v => {
-        const dir = v.clone().normalize();
-        const spikeTip = v.clone().add(dir.multiplyScalar(spikeLength));
-        geo.vertices.push(spikeTip);
-    });
+  // Add spike vertices
+  const baseVertexCount = baseGeo.vertices.length;
+  baseGeo.vertices.forEach(v => {
+    const dir = v.clone().normalize();
+    const spikeTip = v.clone().add(dir.multiplyScalar(spikeLength));
+    geo.vertices.push(spikeTip);
+  });
 
-    baseGeo.faces.forEach(f => {
-        const a = f.a, b = f.b, c = f.c;
-        geo.faces.push(new THREE.Face3(a, b, a + baseVertexCount));
-        geo.faces.push(new THREE.Face3(b, c, b + baseVertexCount));
-        geo.faces.push(new THREE.Face3(c, a, c + baseVertexCount));
-    });
+  // Create spike faces
+  baseGeo.faces.forEach(f => {
+    const a = f.a;
+    const b = f.b;
+    const c = f.c;
 
-    geo.computeFaceNormals();
-    geo.computeVertexNormals();
-    return geo;
+    const spikeA = a + baseVertexCount;
+    const spikeB = b + baseVertexCount;
+    const spikeC = c + baseVertexCount;
+
+    geo.faces.push(new THREE.Face3(a, b, spikeA));
+    geo.faces.push(new THREE.Face3(b, c, spikeB));
+    geo.faces.push(new THREE.Face3(c, a, spikeC));
+  });
+
+  geo.computeFaceNormals();
+  geo.computeVertexNormals();
+  return geo;
 }
 
+
 // =====================================================
-// SHAPES
+// SHAPE FACTORY
 // =====================================================
 function makeGeometry(name) {
-    switch (name) {
-        case "tetra": return new THREE.TetrahedronGeometry(2.3);
-        case "cube": return new THREE.BoxGeometry(3, 3, 3);
-        case "octa": return new THREE.OctahedronGeometry(2.3);
-        case "ico": return new THREE.IcosahedronGeometry(2.2);
-        case "dodeca": return new THREE.DodecahedronGeometry(2.2);
-        case "star": return makeSpikyStarGeometry();
-        default: return new THREE.BoxGeometry(3,3,3);
-    }
+  switch (name) {
+    case "tetra":   return new THREE.TetrahedronGeometry(2.3);  // 6 edges
+    case "cube":    return new THREE.BoxGeometry(3, 3, 3);       // 12 edges
+    case "octa":    return new THREE.OctahedronGeometry(2.3);    // 12 edges
+    case "ico":     return new THREE.IcosahedronGeometry(2.2);   // 30 edges
+    case "dodeca":  return new THREE.DodecahedronGeometry(2.2);  // 30 edges
+    case "star":    return makeSpikyStarGeometry();              // many edges (max)
+    default:        return new THREE.BoxGeometry(3, 3, 3);
+  }
 }
 
-const shapeList = ["tetra", "cube", "octa", "ico", "dodeca", "star"];
+
+// =====================================================
+// SHAPE LIST (EDGE COUNT 오름차순)
+// =====================================================
+const shapeList = [
+  "tetra",   // 6 edges
+  "cube",    // 12 edges
+  "octa",    // 12 edges (조금 더 복잡하므로 cube 다음)
+  "ico",     // 30 edges
+  "dodeca",  // 30 edges (ico보다 심미적으로 더 복잡)
+  "star"     // 가장 많은 edges
+];
+
 let currentIndex = 0;
 
+
+// =====================================================
+// INITIAL OBJECT
+// =====================================================
 let currentEdges = new THREE.EdgesGeometry(makeGeometry(shapeList[currentIndex]));
 let mesh = new THREE.LineSegments(currentEdges, lineMaterial);
 scene.add(mesh);
 
+
 // =====================================================
-// MORPH FUNCTION
+// MORPHING FUNCTION (core of the smooth transformation)
 // =====================================================
 function morphToNext() {
-    let prevPositions = mesh.geometry.attributes.position.array;
-    currentIndex = (currentIndex + 1) % shapeList.length;
+  let prevPositions = mesh.geometry.attributes.position.array;
 
-    let newEdgesGeo = new THREE.EdgesGeometry(makeGeometry(shapeList[currentIndex]));
-    let newPositions = newEdgesGeo.attributes.position.array;
+  currentIndex = (currentIndex + 1) % shapeList.length;
 
-    const maxLen = Math.max(prevPositions.length, newPositions.length);
-    function pad(arr, len) {
-        const out = new Float32Array(len);
-        out.set(arr);
-        return out;
+  let newEdgesGeo = new THREE.EdgesGeometry(makeGeometry(shapeList[currentIndex]));
+  let newPositions = newEdgesGeo.attributes.position.array;
+
+  const maxLen = Math.max(prevPositions.length, newPositions.length);
+
+  function pad(arr, len) {
+    const out = new Float32Array(len);
+    out.set(arr);
+    return out;
+  }
+
+  prevPositions = pad(prevPositions, maxLen);
+  newPositions = pad(newPositions, maxLen);
+
+  const buffer = new THREE.BufferAttribute(prevPositions.slice(), 3);
+  mesh.geometry.setAttribute("position", buffer);
+
+  const start = performance.now();
+  const duration = 900; // 0.9 seconds morphing
+
+  function update() {
+    const now = performance.now();
+    const t = Math.min((now - start) / duration, 1);
+
+    const pos = mesh.geometry.attributes.position.array;
+
+    for (let i = 0; i < maxLen; i++) {
+      pos[i] = prevPositions[i] + (newPositions[i] - prevPositions[i]) * t;
     }
 
-    prevPositions = pad(prevPositions, maxLen);
-    newPositions = pad(newPositions, maxLen);
+    mesh.geometry.attributes.position.needsUpdate = true;
 
-    mesh.geometry.setAttribute("position", new THREE.BufferAttribute(prevPositions.slice(), 3));
+    if (t < 1) requestAnimationFrame(update);
+    else mesh.geometry = newEdgesGeo;
+  }
 
-    const start = performance.now();
-    const duration = 900;
-
-    function update() {
-        const now = performance.now();
-        const t = Math.min((now - start) / duration, 1);
-        const pos = mesh.geometry.attributes.position.array;
-
-        for (let i = 0; i < maxLen; i++)
-            pos[i] = prevPositions[i] + (newPositions[i] - prevPositions[i]) * t;
-
-        mesh.geometry.attributes.position.needsUpdate = true;
-
-        if (t < 1) requestAnimationFrame(update);
-        else mesh.geometry = newEdgesGeo;
-    }
-    update();
+  update();
 }
 
+
+// =====================================================
+// CHANGE SHAPE EVERY 3 SECONDS
+// =====================================================
 setInterval(morphToNext, 5000);
 
+
 // =====================================================
-// LOOP
+// ANIMATION LOOP
 // =====================================================
 function animate() {
-    requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
 
-    mesh.rotation.x += 0.003;
-    mesh.rotation.y += 0.004;
+  mesh.rotation.x += 0.003;
+  mesh.rotation.y += 0.004;
 
-    renderer.render(scene, camera);
+  renderer.render(scene, camera);
 }
+
 animate();
 
-// =====================================================
-// RESIZE
-// =====================================================
-window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
 </script>
 
 </body>
